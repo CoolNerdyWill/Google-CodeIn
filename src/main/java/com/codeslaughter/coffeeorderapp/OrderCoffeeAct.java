@@ -14,10 +14,32 @@ public class OrderCoffeeAct extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_coffee);
-        TextView output = findViewById(R.id.textView);
-        Integer Cost = Integer.parseInt(MainActivity.Cnum) * 2;
-        String outputStr = MainActivity.Unam + "'s order is " + MainActivity.Cnum + " coffees totaling to £" + Cost.toString();
-        output.setText(outputStr);
+        TextView[] outputs = new TextView[] {findViewById(R.id.textView),findViewById(R.id.textView3),findViewById(R.id.textView4),findViewById(R.id.textView5),findViewById(R.id.textView6),findViewById(R.id.textView11),findViewById(R.id.textView12)};
+        User user = MainActivity.user;
+        Integer[] Costs = new Integer[5];
+        Integer TCost = 0;
+        String outputStr = user.Name + "'s order is:";
+        outputs[0].setText(outputStr);
+        outputStr = "";
+        for (int i = 0;i<5;i++){
+            coffee current = User.coffees[i];
+            Costs[i] = current.TCost;
+            TCost += Costs[i];
+            outputStr += current.Amount.toString() + " " + current.Name;
+            if(current.Amount>1){
+                outputStr += "s";
+            }
+            outputStr += " costing £" + current.TCost.toString();
+            if(i == 3){
+                outputStr += " and";
+            }else if (i < 3){
+                outputStr += ",";
+            }
+            outputs[i+1].setText(outputStr);
+            outputStr= "";
+        }
+        outputStr += "Which totals to £" + TCost.toString();
+        outputs[6].setText(outputStr);
     }
 
     public void button2OnClick(View v){
